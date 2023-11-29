@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<!--
+	Forty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Climate Change and Co2 emissions</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+				<!-- Main -->
+					<div id="main" class="alt">
+
+						<!-- One -->
+							<section id="one">
+								<div class="inner">
+									<header class="major">
+										<h1>Climate Change and Co2 emissions</h1>
+									</header>
+									<span class="image main"><img src="images/co2.webp" alt="" /></span>
+									<p> Year after year, it becomes increasingly evident that the weather is undergoing changes, and natural catastrophes are escalating. For this reason I decided to explore more in depth the evolution of these weather changes and what we nowdays consider are the main factors ionvolved.</p>
+									<p> I conducted a comprehensive analysis of global CO2 emissions and transformed climatological data from ERA5 Copernicus into a CSV format using Python. Subsequently, I meticulously cleaned and integrated these diverse datasets using Excel and Tableau, culminating in a compelling presentation within the Tableau platform.</p>
+									<p>ERA5 is the fifth generation ECMWF atmospheric reanalysis of the global climate covering the period from January 1940 to present. I ended up only using the observatory data, last csv dowloanded. The location of the readings was Maona Loa.  ERA5 has an API but I found a way to use python to transform the dataset into csv format and then take it to Tableau. Here is the code:</p>
+									
+	<!DOCTYPE html>
+        <html lang="en">
+            <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+  <style id="custom-code-styles">
+	/* Custom CSS to adjust code font size and background color */
+	#main pre code {
+	  font-size: 10px; /* Adjust the font size as needed */
+	  background-color: white; /* Set the background color to white */
+	  max-width: 800px; /* Set the maximum width of the container */
+  margin: 0 auto; /* Center the container horizontally */
+}
+  </style>
+  
+            </head>
+            <body>
+	        <pre>
+		    <code class="language-python">
+			# xarray is a Python library designed for working with labeled multi-dimensional arrays and datasets.
+			#It's commonly used for working with NetCDF datasets, which are often used in climate and geoscience research. 
+			# os is a module that allows you to use operating system dependent functionality
+			
+			import xarray as xr
+			import os
+			
+			# within the os module os.path.expanduser create home directory to be able to access the dataset and know the folder where is located. 
+			# within the xarray library function open_dataset  takes a netCDF document and save it as dataset. 
+			
+			file_path = os.path.expanduser("hourly_data_1")
+			dataset = xr.open_dataset(file_path)
+			print(dataset)
+			<xarray.Dataset>
+			Dimensions:    (longitude: 1, latitude: 1, time: 48)
+			Coordinates:
+			  * longitude  (longitude) float32 -7.1
+			  * latitude   (latitude) float32 35.9
+			  * time       (time) datetime64[ns] 1940-08-09 ... 2022-08-09T23:00:00
+			Data variables: (12/21)
+				u10        (time, latitude, longitude) float32 ...
+				v10        (time, latitude, longitude) float32 ...
+				d2m        (time, latitude, longitude) float32 ...
+				t2m        (time, latitude, longitude) float32 ...
+				cp         (time, latitude, longitude) float32 ...
+				crr        (time, latitude, longitude) float32 ...
+				...         ...
+				ptype      (time, latitude, longitude) float32 ...
+				sst        (time, latitude, longitude) float32 ...
+				swh        (time, latitude, longitude) float32 ...
+				sp         (time, latitude, longitude) float32 ...
+				tcrw       (time, latitude, longitude) float32 ...
+				tp         (time, latitude, longitude) float32 ...
+			Attributes:
+				Conventions:  CF-1.6
+				history:      2023-08-27 10:55:31 GMT by grib_to_netcdf-2.25.1: /opt/ecmw...
+			# creates and manipulates tables 
+			
+			import pandas as pd
+			df = dataset.to_dataframe()
+			csv_file_path = os.path.expanduser("hourly_data_1.csv")
+			df.to_csv(csv_file_path)
+			#converting second hourly dataset into csv
+			
+			
+			
+			file_path_2 = os.path.expanduser("hourly_data_2")
+			dataset_2 = xr.open_dataset(file_path_2)
+			df_2 = dataset_2.to_dataframe()
+			csv_file_path_2 = os.path.expanduser("hourly_data_2.csv")
+			df_2.to_csv(csv_file_path_2)
+			hourly_data_cadiz = pd.read_excel('hourly_data.xlsx')
+			hourly_data_cadiz.head(5)
+			longitude	latitude	time	2m dewpoint temperature	2m temperature	Convective precipitation	large scale precipitation	large scale precipitation fraction	msl	Precipitation type	Sea surface temperature	Surface pressure
+			0	-7.1	35.900002	1940-08-09 00:00:00	293.58374	294.93140	-2.842171e-14	0.000000e+00	12.04895	101806.130	0	295.57764	101841.000
+			1	-7.1	35.900002	1940-08-09 01:00:00	293.54930	294.77686	-2.842171e-14	0.000000e+00	169.65490	101805.445	0	295.57764	101841.125
+			2	-7.1	35.900002	1940-08-09 02:00:00	293.47067	294.63013	-2.842171e-14	0.000000e+00	530.99860	101788.820	0	295.57764	101824.060
+			3	-7.1	35.900002	1940-08-09 03:00:00	293.49588	294.55444	-2.842171e-14	1.908356e-07	1305.92640	101765.500	1	295.57764	101801.125
+			4	-7.1	35.900002	1940-08-09 04:00:00	293.52173	294.53687	-2.842171e-14	0.000000e+00	1402.36060	101722.880	1	295.57764	101758.240
+			hourly_data_cadiz.shape
+			(48, 12)
+			#downloaded new datasets
+			
+			file_path_3 = os.path.expanduser("80years_1")
+			dataset_3 = xr.open_dataset(file_path_3)
+			df_3 = dataset_3.to_dataframe()
+			csv_file_path_3 = os.path.expanduser("80years_1.csv")
+			df_3.to_csv(csv_file_path_3)
+			file_path_4 = os.path.expanduser("80years_2")
+			dataset_4 = xr.open_dataset(file_path_4)
+			df_4 = dataset_4.to_dataframe()
+			csv_file_path_4 = os.path.expanduser("80years_2.csv")
+			df_4.to_csv(csv_file_path_4)
+			#One more dataset maou observatory
+			file_path_4 = os.path.expanduser("Observatory_data")
+			dataset_4 = xr.open_dataset(file_path_3)
+			df_4 = dataset_4.to_dataframe()
+			csv_file_path_4 = os.path.expanduser("Observatory_data.csv")
+			df_4.to_csv(csv_file_path_4)
+			 
+		    </code>
+	  </pre>
+
+	  <p> I then searched for a dataset with information related to greenhouse emissions and other interesting factors such as GDP per continent and country. I found it in Our World in data. Below you'll find a Tableau Public presentation with all the dashboards I created, Limitations & Conclusions of my analysis. 
+		<p><a href="https://ourworldindata.org/co2-emissions"> Click here to see the data source in Our World in Data website.</a></li></p>
+		<p><a href="https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels-monthly-means?tab=overview"> Click here to see ERA5's website.</a></li></p>
+	  <div class='tableauPlaceholder' id='viz1700157122472' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Cl&#47;ClimateChangeAnalysis_16958289684890&#47;3_Greenhouseemissionsandindustries&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='ClimateChangeAnalysis_16958289684890&#47;3_Greenhouseemissionsandindustries' /><param name='tabs' value='yes' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Cl&#47;ClimateChangeAnalysis_16958289684890&#47;3_Greenhouseemissionsandindustries&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1700157122472');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.minHeight='1350px';vizElement.style.maxHeight=(divElement.offsetWidth*1.77)+'px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+
+			</section>
+			</div>
+			
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

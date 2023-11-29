@@ -1,0 +1,219 @@
+<!DOCTYPE HTML>
+<!--
+	Forty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Generic - Forty by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Menu -->
+					<nav id="menu">
+						<ul class="links">
+							<li><a href="index.html">Home</a></li>
+							<li><a href="landing.html">Landing</a></li>
+							<li><a href="generic.html">Generic</a></li>
+							<li><a href="elements.html">Elements</a></li>
+						</ul>
+						<ul class="actions stacked">
+							<li><a href="#" class="button primary fit">Get Started</a></li>
+							<li><a href="#" class="button fit">Log In</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main" class="alt">
+
+						<!-- One -->
+							<section id="one">
+								<div class="inner">
+									<header class="major">
+										<h1>Gender Gap Salaries</h1>
+									</header>
+									<span class="image main"><img src="images/gender.jpeg" alt="" /></span>
+									<p>This is an analysis of the gender pay gap in the uk. The dataset was taken from Gov.uk </p>
+									<p>The data is self reported, by all companies with more
+										than 250 employees. Reporting is mandatory for these companies. Different measures of the pay gap must be
+										submitted.</p>
+									<p> The presentation with my findings is hosted in github</p>
+									<p><a href="//github.com/PatriciaBG-Analyst/SQL_Gov_gender/blob/main/GenderpaygapSQLlab_presentation.pdf "> Click here to see the presentation in github </a></li></p>
+							
+            <section id="sql-code">
+                <header class="major">
+                    <h2>SQL Code</h2>
+                </header>
+                <pre>
+<code>
+	select*
+	from gender_pay_gap_21_22
+	-- 1. How many companies are in the data set?
+	select
+	count(employerid)
+	from gender_pay_gap_21_22;
+	→10174
+	-- 2. How many of them submitted their data after the reporting deadline?
+	select
+	submittedafterthedeadline,
+	count(employerid)
+	from gender_pay_gap_21_22
+	group by submittedafterthedeadline;
+	→ True (361)
+	-- 3. How many companies have not provided a URL?
+	select
+	count(companylinktogpginfo)
+	from gender_pay_gap_21_22
+	where companylinktogpginfo = '0'
+	→ 3700
+	-- 4. Which measures of pay gap contain too much missing data, and should not be used in our
+	analysis?
+	select
+	diffmeanhourlypercent
+	from gender_pay_gap_21_22
+	where diffmeanhourlypercent is NULL;
+	→ No NULLS
+	select
+	count(DiffMedianHourlyPercent)
+	from gender_pay_gap_21_22
+	where DiffMedianHourlyPercent = 0.0 ;
+	→ 861 (too many missing values)
+	select
+	count(DiffMeanHourlyPercent)
+	from gender_pay_gap_21_22
+	where DiffMeanHourlyPercent = 0.0;
+	→ 99
+	select
+	STDDEV_SAMP(diffmeanhourlypercent)
+	from gender_pay_gap_21_22;
+	→ 14 select
+	STDDEV_SAMP(DiffMedianHourlyPercent)
+	from gender_pay_gap_21_22;
+	→ 16
+	-- 5. Choose which column you will use to calculate the pay gap. Will you use
+	DiffMeanHourlyPercent or DiffMedianHourlyPercent? Can you justify your choice?
+	DiffMeanHourlyPercent
+	Even though the mean can have outliers and can skew the results the median has too many missing
+	values to be reliable.
+	-- 6. Use an appropriate metric to find the average gender pay gap across all the companies in
+	the data set. Did you use the mean or the median as your averaging metric? Can you justify
+	your choice?
+	select
+	avg(diffmeanhourlypercent)
+	from gender_pay_gap_21_22;
+	→ 13.6350599567525064
+	7. What are some caveats we need to be aware of when reporting the figure we’ve just
+	calculated?
+	→ that there might be outliers and the sample size the results are out of the given data set there might
+	not be representative of the population.
+	8. What are the 10 companies with the largest pay gaps skewed towards men?
+	select
+	employername,
+	diffmeanhourlypercent
+	from gender_pay_gap_21_22
+	where diffmeanhourlypercent >0
+	order by diffmeanhourlypercent desc
+	limit 10;
+	9. What do you notice about the results? Are these well-known companies
+	These are male dominant industries.
+	Football clubs mostly so yes.
+	10. Apply some additional filtering to pick out the most significant companies with large pay
+	gaps.
+	select
+	employername,
+	diffmeanhourlypercent,
+	responsibleperson,
+	employersize,
+	malebonuspercent,
+	femalebonuspercent
+	from gender_pay_gap_21_22
+	where diffmeanhourlypercent >0
+	and malebonuspercent>80
+	order by diffmeanhourlypercent desc
+	limit 10;
+	11. How would you report on the results? Can we say that these companies are engaging in
+	unlawful pay discrimination?
+	We don’t know as the different types of jobs are not specified is all included under the same
+	aggregation so we can not know the nuances of seniority and the responsibility of different roles
+	within each company.
+	12. What’s the average pay gap in London versus outside London?
+	select
+	avg(diffmeanhourlypercent)
+	from gender_pay_gap_21_22
+	where address like '%London%'
+	;
+	→ 15.700486725663717
+	13. What’s the average pay gap in London versus Birmingham?
+	select
+	avg(diffmeanhourlypercent)
+	from gender_pay_gap_21_22
+	where address like '%Birmingham%'
+	;
+	→ 13.222448979591837
+	14. What is the average pay gap within schools?
+	SELECT
+	avg(diffmeanhourlypercent) AS avg_siccodes,
+	CASE
+	WHEN siccodes = '85100' THEN 'Pre-primary education'
+	WHEN siccodes = '85200' THEN 'Primary education'
+	WHEN siccodes = '85310' THEN 'Secondary education'
+	WHEN siccodes = '85320' THEN 'TechVoc Secondary education'
+	WHEN siccodes = '85410' THEN 'Post secondary education'
+	WHEN siccodes = '85421' THEN 'undergraduate'
+	WHEN siccodes = '85442' THEN 'Masters'
+	ELSE 'Other'
+	END AS category
+	FROM gender_pay_gap_21_22
+	GROUP BY category
+	15. What is the average pay gap within banks?
+	SELECT
+	avg(diffmeanhourlypercent),
+	CASE
+	WHEN siccodes like '64%' THEN 'Banks'
+	ELSE 'Other'
+	END AS category
+	FROM gender_pay_gap_21_22
+	GROUP BY category;
+	16. Is there a relationship between the number of employees at a company and the average
+	pay gap?
+	SELECT
+	COUNT(employerid) AS Companies_Count, avg(DiffMeanHourlyPercent) AS
+	AVG_DiffMeamHourlyPercent, employersize
+	FROM gender_pay_gap_21_22
+	GROUP BY employersize;
+	
+
+</code>
+                </pre>
+            </section>
+            <!-- End SQL Code Section -->
+
+        </div>
+    </section>
+
+</div>
+
+								</div>
+							</section>
+
+					</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
