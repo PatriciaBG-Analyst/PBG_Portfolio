@@ -1,18 +1,30 @@
 <!DOCTYPE HTML>
-<!--
-	Forty by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Climate Change and Co2 emissions</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>Climate Change and Co2 emissions</title>
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript>
+        <link rel="stylesheet" href="assets/css/noscript.css" />
+    </noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
+    <style id="custom-code-styles">
+        /* Custom CSS to adjust code font size and background color */
+        #main pre code {
+            font-size: 10px; /* Adjust the font size as needed */
+            background-color: white; /* Set the background color to white */
+            max-width: 800px; /* Set the maximum width of the container */
+            margin: 0 auto; /* Center the container horizontally */
+        }
+    </style>
+</head>
+<body>
+    <!-- Your content goes here -->
+</body>
+</html>
+
+
 
 				<!-- Main -->
 					<div id="main" class="alt">
@@ -21,42 +33,21 @@
 							<section id="one" style="background-color: rgb(206, 100, 51);">
 								<div class="inner">
 									<header class="major">
-										<h2>Climate Change and CO2 Emissions</h2>
+										<h2>Climate Change & CO2 Emissions</h2>
 									</header>
 								</div>
 							</section>
 
-						<!-- One -->
-							<section id="one">
+						<!-- Two -->
+							<section id="Two">
 								<div class="inner">
-
-									
-        
-            </header>
 									<p> Year after year, it becomes increasingly evident that the weather is undergoing changes, and natural catastrophes are escalating. For this reason I decided to explore more in depth the evolution of these weather changes and what we nowdays consider are the main factors ionvolved.</p>
 									<p> I conducted a comprehensive analysis of global CO2 emissions and transformed climatological data from ERA5 Copernicus into a CSV format using Python. Subsequently, I meticulously cleaned and integrated these diverse datasets using Excel and Tableau, culminating in a compelling presentation within the Tableau platform.</p>
 									<p>ERA5 is the fifth generation ECMWF atmospheric reanalysis of the global climate covering the period from January 1940 to present. I ended up only using the observatory data, last csv dowloanded. The location of the readings was Maona Loa.  ERA5 has an API but I found a way to use python to transform the dataset into csv format and then take it to Tableau. Here is the code:</p>
 									
-	<!DOCTYPE html>
-        <html lang="en">
-            <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css">
-  <style id="custom-code-styles">
-	/* Custom CSS to adjust code font size and background color */
-	#main pre code {
-	  font-size: 10px; /* Adjust the font size as needed */
-	  background-color: white; /* Set the background color to white */
-	  max-width: 800px; /* Set the maximum width of the container */
-  margin: 0 auto; /* Center the container horizontally */
-}
-  </style>
-  
-            </head>
-            <body>
-	        <pre>
-		    <code class="language-python">
+                                <body>
+	                               <pre>
+		                                <code class="language-python">
 			# xarray is a Python library designed for working with labeled multi-dimensional arrays and datasets.
 			#It's commonly used for working with NetCDF datasets, which are often used in climate and geoscience research. 
 			# os is a module that allows you to use operating system dependent functionality
@@ -137,16 +128,18 @@
 			csv_file_path_4 = os.path.expanduser("Observatory_data.csv")
 			df_4.to_csv(csv_file_path_4)
 			 
-		    </code>
-	  </pre>
+		                                </code>
+	                               </pre>
 
-	  <p> I then searched for a dataset with information related to greenhouse emissions and other interesting factors such as GDP per continent and country. I found it in Our World in data. Below you'll find a Tableau Public presentation with all the dashboards I created, Limitations & Conclusions of my analysis. 
-		<p><a href="https://ourworldindata.org/co2-emissions"> Click here to see the data source in Our World in Data website.</a></li></p>
-		<p><a href="https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels-monthly-means?tab=overview"> Click here to see ERA5's website.</a></li></p>
-	  <div class='tableauPlaceholder' id='viz1700157122472' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Cl&#47;ClimateChangeAnalysis_16958289684890&#47;3_Greenhouseemissionsandindustries&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='ClimateChangeAnalysis_16958289684890&#47;3_Greenhouseemissionsandindustries' /><param name='tabs' value='yes' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Cl&#47;ClimateChangeAnalysis_16958289684890&#47;3_Greenhouseemissionsandindustries&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1700157122472');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.minHeight='1350px';vizElement.style.maxHeight=(divElement.offsetWidth*1.77)+'px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+	                               <p> I then searched for a dataset with information related to greenhouse emissions and other interesting factors such as GDP per continent and country. I found it in Our World in data. Below you'll find a Tableau Public presentation with all the dashboards I created, Limitations & Conclusions of my analysis.</p> 
+		                           <p><a href="https://ourworldindata.org/co2-emissions"> Click here to see the data source in Our World in Data website.</a></p>
+		                           <p><a href="https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels-monthly-means?tab=overview"> Click here to see ERA5's website.</a></p>
 
-			</section>
-			</div>
+
+	                             <div class='tableauPlaceholder' id='viz1700157122472' style='position: relative'><noscript><a href='#'><img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Cl&#47;ClimateChangeAnalysis_16958289684890&#47;3_Greenhouseemissionsandindustries&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='ClimateChangeAnalysis_16958289684890&#47;3_Greenhouseemissionsandindustries' /><param name='tabs' value='yes' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Cl&#47;ClimateChangeAnalysis_16958289684890&#47;3_Greenhouseemissionsandindustries&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1700157122472');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.minHeight='1350px';vizElement.style.maxHeight=(divElement.offsetWidth*1.77)+'px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+
+			                </section>
+			                      </div>
 			
 
 		<!-- Scripts -->
